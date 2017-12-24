@@ -1,0 +1,32 @@
+@(customerForm: Form[models.Customer])
+
+@import helper._
+
+
+
+@main("Add customer"){
+    <p class="lead">Add a new customer</p>
+    @if(flash.containsKey("success")){
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+    }
+    @form(action=routes.HomeController.addCustomerSubmit() , 'class -> "form-horizontal", 'role -> "form"){
+
+        @CSRF.formField
+        
+
+        @inputText(customerForm("fName"),   '_label -> "First Name", 'class -> "form-control")
+        @inputText(customerForm("lName"),   '_label -> "Last Name",  'class -> "form-control")
+        @inputText(customerForm("address"), '_label -> "Address",    'class -> "form-control")
+        
+        @inputText(customerForm("id"), '_label -> "", 'hidden -> "hidden")
+        <div class="actions">
+            <input type="submit" value="Add Customer" class="btn btn-primary" onclick="return confirmAddedUpdated();">
+            <a href="@routes.HomeController.customers()">
+                <button class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+
+    }@*End of form *@
+}@*End of page content *@
